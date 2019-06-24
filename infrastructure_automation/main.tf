@@ -51,6 +51,7 @@ module "Containers" {
   env = "${var.env}"
   region = "${var.region}"
   tag = "${var.tag}"
+  alb_target_group_arn = "${module.Instances-And-LoadBalancers.alb_target_group_arn}"
 }
 
 

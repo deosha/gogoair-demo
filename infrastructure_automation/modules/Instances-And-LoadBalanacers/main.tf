@@ -80,7 +80,7 @@ data "template_file" "user_data" {
 
 resource "aws_alb_target_group" "alb-tg" {
   name                 = "demo-alb-tg-${var.env}"
-  port                 = 8000
+  port                 = 80
   protocol             = "HTTP"
   vpc_id               = "${var.vpc_id}"
   deregistration_delay = "${var.deregistration_delay}"
@@ -120,11 +120,6 @@ resource "aws_alb_listener" "alb-listener" {
     target_group_arn = "${aws_alb_target_group.alb-tg.id}"
     type = "forward"
   }
-}
-
-resource "aws_autoscaling_attachment" "alb-asg_attachment" {
-  autoscaling_group_name = "${aws_autoscaling_group.asg.id}"
-  alb_target_group_arn   = "${aws_alb_target_group.alb-tg.arn}"
 }
 
 

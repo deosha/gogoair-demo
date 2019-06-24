@@ -21,7 +21,6 @@ resource "aws_launch_configuration" "lc" {
   image_id             = "${data.aws_ami.ecs_instance_ami.id}"
   instance_type        = "${var.instance_type}"
   security_groups      = ["${var.security_group}"]
-  associate_public_ip_address = true
   iam_instance_profile = "${var.iam_instance_profile}"
   user_data            = "${data.template_file.user_data.rendered}"
   key_name             = "${var.key_name}"
@@ -43,7 +42,7 @@ resource "aws_autoscaling_group" "asg" {
   desired_capacity     = "${var.desired_capacity}"
   force_delete         = true
   launch_configuration = "${aws_launch_configuration.lc.id}"
-  vpc_zone_identifier  = ["${var.public_subnet_ids}"]
+  vpc_zone_identifier  = ["${var.private_subnet_ids}"]
 
   tag {
     key                 = "Name"

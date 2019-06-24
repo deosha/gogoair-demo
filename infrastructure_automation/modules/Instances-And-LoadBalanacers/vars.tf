@@ -54,12 +54,10 @@ variable "desired_capacity" {
 
 
 variable "private_subnet_ids" {
-  type        = "list"
   description = "The list of private subnets to place the instances in"
 }
 
 variable "public_subnet_ids" {
-  type        = "list"
   description = "The list of public subnets to place the instances in"
 }
 

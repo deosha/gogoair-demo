@@ -79,7 +79,7 @@ data "template_file" "user_data" {
 }
 
 resource "aws_alb_target_group" "alb-tg" {
-  name                 = "demo-alb-frontend-tg-${var.env}"
+  name                 = "demo-alb-tg-${var.env}"
   port                 = 80
   protocol             = "HTTP"
   vpc_id               = "${var.vpc_id}"
@@ -118,12 +118,7 @@ resource "aws_alb_listener" "alb-listener" {
 
   default_action {
     target_group_arn = "${aws_alb_target_group.alb-tg.id}"
-    type             = "redirect"
-    redirect {
-      port        = "80"
-      protocol    = "HTTP"
-      status_code = "HTTP_301"
-    }
+    type = "forward"
   }
 }
 

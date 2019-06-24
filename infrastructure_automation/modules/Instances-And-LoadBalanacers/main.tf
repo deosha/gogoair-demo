@@ -122,4 +122,9 @@ resource "aws_alb_listener" "alb-listener" {
   }
 }
 
+resource "aws_autoscaling_attachment" "alb-asg_attachment" {
+  autoscaling_group_name = "${aws_autoscaling_group.asg.id}"
+  alb_target_group_arn   = "${aws_alb_target_group.alb-tg.arn}"
+}
+
 

@@ -52,7 +52,7 @@ resource "aws_ecs_service" "demo" {
 
   load_balancer {
     target_group_arn = "${var.alb_target_group_arn}"
-    container_name = "demo-${env}"
+    container_name = "demo-${var.env}"
     container_port = 8000
   }
 

@@ -1,0 +1,23 @@
+[
+  {
+    "name": "demo-${env}",
+    "image": "deojha1771/gogoair:${tag}",
+    "memory": 256,
+    "cpu": 128,
+    "portMappings": [
+      {
+        "hostPort": 80,
+        "containerPort": 8000,
+        "protocol": "tcp"
+      }
+    ],
+    "logConfiguration": {
+      "logDriver": "awslogs",
+      "options": {
+        "awslogs-group": "demo-${env}",
+        "awslogs-region": "${region}",
+        "awslogs-stream-prefix": "ecs"
+      }
+    }
+  }
+]

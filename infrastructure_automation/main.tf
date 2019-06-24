@@ -29,8 +29,8 @@ module "Security-And-Authentications" {
 
 module "Instances-And-LoadBalancers" {
   source = "./modules/Instances-And-LoadBalanacers"
-  private_subnet_ids = ["${module.Network-And-DNS.private_subnet_id1}, ${module.Network-And-DNS.private_subnet_id2}"]
-  public_subnet_ids = ["${module.Network-And-DNS.public_subnet_id1}, ${module.Network-And-DNS.public_subnet_id2}"]
+  private_subnet_ids = ["${module.Network-And-DNS.private_subnet_id1}", "${module.Network-And-DNS.private_subnet_id2}"]
+  public_subnet_ids = ["${module.Network-And-DNS.public_subnet_id1}", "${module.Network-And-DNS.public_subnet_id2}"]
   public_subnet_id = "${module.Network-And-DNS.public_subnet_id1}"
   vpc_id = "${module.Network-And-DNS.id}"
   cluster = "${module.Containers.cluster_name}"

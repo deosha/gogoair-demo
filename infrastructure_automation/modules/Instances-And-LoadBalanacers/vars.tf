@@ -91,4 +91,15 @@ variable "iam_instance_profile" {
   description = "instance profile of ecs instance"
 }
 
+variable "deregistration_delay" {
+  description = "ALB deregistration delay"
+}
+
+variable "health_check_path" {
+  description = "ALB healthcheck path"
+}
+
+variable "alb_security_group" {
+  description = "ALB security group"
+}
 

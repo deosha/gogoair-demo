@@ -41,6 +41,9 @@ module "Instances-And-LoadBalancers" {
   nat_gateway2_id = "${module.Network-And-DNS.nat_gateway2_id}"
   instance_type = "${var.instance_type}"
   iam_instance_profile = "${module.Security-And-Authentications.ecs-asg-iam-instance-profile-name}"
+  alb_security_group = "${module.Security-And-Authentications.alb-sg-id}"
+  deregistration_delay = "${var.deregistration_delay}"
+  health_check_path = "${var.health_check_path}"
 }
 
 module "Containers" {

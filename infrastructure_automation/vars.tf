@@ -14,9 +14,15 @@ variable "instance_type" {
   description = "instance type"
 }
 
-
 variable "tag" {
-  default = "latest"
   description = "Docker tag"
+}
+
+variable "deregistration_delay" {
+  description = "ALB deregistration delay"
+}
+
+variable "health_check_path" {
+  description = "ALB healthcheck path"
 }
 

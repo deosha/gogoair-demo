@@ -78,4 +78,65 @@ data "template_file" "user_data" {
   }
 }
 
+resource "aws_alb_target_group" "alb-tg" {
+  name                 = "demo-alb-frontend-tg-${var.env}"
+  port                 = 80
+  protocol             = "HTTP"
+  vpc_id               = "${var.vpc_id}"
+  deregistration_delay = "${var.deregistration_delay}"
+
+  health_check {
+    path     = "${var.health_check_path}"
+    protocol = "HTTP"
+  }
+
+  tags {
+    Name = "demo-alb-tg-${var.env}"
+    Environment = "${var.env}"
+    Created_By = "Terraform"
+  }
+  depends_on = ["aws_alb.alb"]
+}
+
+resource "aws_alb" "alb" {
+  name            = "demo-alb-${var.env}"
+  subnets         = "${var.public_subnet_ids}"
+  security_groups = ["${var.alb_security_group}"]
+  idle_timeout    = "300"
+
+  tags {
+    Name        = "demo-alb-${var.env}"
+    Environment = "${var.env}"
+    Created_By = "Terraform"
+  }
+}
+
+resource "aws_alb_listener" "alb-listener" {
+  load_balancer_arn = "${aws_alb.alb.arn}"
+  port              = "80"
+  protocol          = "HTTP"
+
+  default_action {
+    target_group_arn = "${aws_alb_target_group.alb-tg.id}"
+    type             = "redirect"
+    redirect {
+      port        = "80"
+      protocol    = "HTTP"
+      status_code = "HTTP_200"
+    }
+  }
+}
+
+resource "aws_lb_listener" "alb-listener-https" {
+  load_balancer_arn = "${aws_alb.alb.arn}"
+  port              = "80"
+  protocol          = "HTTP"
+
+  default_action {
+    type             = "forward"
+    target_group_arn = "${aws_alb_target_group.alb-tg.arn}"
+  }
+}
+
+
 

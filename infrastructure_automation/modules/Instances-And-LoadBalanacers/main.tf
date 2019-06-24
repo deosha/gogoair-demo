@@ -80,7 +80,7 @@ data "template_file" "user_data" {
 
 resource "aws_alb_target_group" "alb-tg" {
   name                 = "demo-alb-tg-${var.env}"
-  port                 = 80
+  port                 = 8000
   protocol             = "HTTP"
   vpc_id               = "${var.vpc_id}"
   deregistration_delay = "${var.deregistration_delay}"

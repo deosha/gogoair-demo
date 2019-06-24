@@ -100,7 +100,7 @@ resource "aws_alb_target_group" "alb-tg" {
 
 resource "aws_alb" "alb" {
   name            = "demo-alb-${var.env}"
-  subnets         = "${var.public_subnet_ids}"
+  subnets         = ["${var.public_subnet_ids}"]
   security_groups = ["${var.alb_security_group}"]
   idle_timeout    = "300"
 

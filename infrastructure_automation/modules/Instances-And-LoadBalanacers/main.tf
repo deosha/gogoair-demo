@@ -122,7 +122,7 @@ resource "aws_alb_listener" "alb-listener" {
     redirect {
       port        = "80"
       protocol    = "HTTP"
-      status_code = "HTTP_200"
+      status_code = "HTTP_301"
     }
   }
 }

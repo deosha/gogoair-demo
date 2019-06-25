@@ -25,7 +25,7 @@ you should have a key named "demo" in your key pair. If you want to change it, y
 export AWS_ACCESS_KEY_ID="" <br>
 export AWS_SECRET_ACCESS_KEY="" <br>
 cd infrastructure_automation <br>
-terraform init -backend-config="bucket=state-files-gogoair" -backend-config="key=demo/infra.tfstate" -backend-config="region=us-west-2" -backend=true -force-copy -get=true -input=false <br><br>
+terraform init -backend-config="bucket=state-files-gogoair" -backend-config="key=demo/infra.tfstate" -backend-config="region=us-west-2" -backend=true -force-copy -get=true -input=false <br>
 terraform apply -input=false --var env=stage --var tag=latest -var-file=demo.tfvars -auto-approve && sleep 120
 
 sleep is added to make sure that target groups are healthy. If they are not healthy, wait for them to be healthy. Deregistration delay is 5 mins.

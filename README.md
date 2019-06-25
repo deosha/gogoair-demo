@@ -16,16 +16,19 @@ Check for user permissions and PATH env variable
 
 * System dependencies: The deployment can be done from Windows/Linux/macos or by using any deployment tool like Jenkins but infrastructure is created on AWS
 
-* Configuration: You need to configure AWS access keys and secret keys for terraform to read.
+* Configuration: You need to configure AWS access keys and secret keys for terraform to read. you should have a key named "demo" in your key pair. If you want to change it, you can do so by changing the value of key_pair_name variable in demo.tfvars
 
 * How to run the test suite: NA
 
 * Deployment instructions:
+you should have a key named "demo" in your key pair. If you want to change it, you can do so by changing the value of key_pair_name variable in demo.tfvars
 export AWS_ACCESS_KEY_ID=""
 export AWS_SECRET_ACCESS_KEY=""
 cd infrastructure_automation
 terraform init -backend-config="bucket=state-files-gogoair" -backend-config="key=demo/infra.tfstate" -backend-config="region=us-west-2" -backend=true -force-copy -get=true -input=false
-terraform apply -input=false --var env=${env} --var tag=${tag} -var-file=demo.tfvars -auto-approve && sleep 300
+terraform apply -input=false --var env=${env} --var tag=${tag} -var-file=demo.tfvars -auto-approve && sleep 120
+
+sleep is added to make sure that target groups are healthy. If they are not healthy, wait for them to be healthy. Deregistration delay is 5 mins.
 
 You can create your own bucket and change configurations accoridngly in main.tf and terraform init commands. Region is us-west-2 which you can change,
 
@@ -51,6 +54,6 @@ route tables, route tables associates. The code automates everything related to 
 
 To DO:
 1. Failed Deployment notification can be implemeented in Jenkins as post build step.
-2. Cloudwatch Monitoring and SNS notifications can be implemented. 
+2. Cloudwatch Monitoring and SNS notifications can be implemented.
 
 

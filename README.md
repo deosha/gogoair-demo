@@ -9,9 +9,9 @@ Application is dockerized. S3 for storing Terraform state files. Logs are sent t
 * Infrastructure automation tool with version: Terraform 0.11.7 (Not tested with terraform 0.12 because changes in 0.12 are huge. Best runs with Terraform 0.11)
 
 * Instruction to install correct version of Terraform:
-wget https://releases.hashicorp.com/terraform/0.11.7/terraform_0.11.7_linux_amd64.zip
-unzip terraform_0.11.7_linux_amd64.zip
-sudo mv terraform /usr/bin
+wget https://releases.hashicorp.com/terraform/0.11.7/terraform_0.11.7_linux_amd64.zip <br>
+unzip terraform_0.11.7_linux_amd64.zip <br>
+sudo mv terraform /usr/bin <br>
 Check for user permissions and PATH env variable
 
 * System dependencies: The deployment can be done from Windows/Linux/macos or by using any deployment tool like Jenkins but infrastructure is created on AWS
@@ -22,10 +22,10 @@ Check for user permissions and PATH env variable
 
 * Deployment instructions:
 you should have a key named "demo" in your key pair. If you want to change it, you can do so by changing the value of key_pair_name variable in demo.tfvars
-export AWS_ACCESS_KEY_ID=""
-export AWS_SECRET_ACCESS_KEY=""
-cd infrastructure_automation
-terraform init -backend-config="bucket=state-files-gogoair" -backend-config="key=demo/infra.tfstate" -backend-config="region=us-west-2" -backend=true -force-copy -get=true -input=false
+export AWS_ACCESS_KEY_ID="" <br>
+export AWS_SECRET_ACCESS_KEY="" <br>
+cd infrastructure_automation <br>
+terraform init -backend-config="bucket=state-files-gogoair" -backend-config="key=demo/infra.tfstate" -backend-config="region=us-west-2" <br> -backend=true -force-copy -get=true -input=false
 terraform apply -input=false --var env=stage --var tag=latest -var-file=demo.tfvars -auto-approve && sleep 120
 
 sleep is added to make sure that target groups are healthy. If they are not healthy, wait for them to be healthy. Deregistration delay is 5 mins.

@@ -60,7 +60,4 @@ resource "aws_ecs_service" "demo" {
     type = "distinctInstance"
   }
 
-  provisioner "local-exec" {
-    command = "sleep 120"
-  }
 }

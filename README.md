@@ -2,7 +2,8 @@
 [![Build Status](https://travis-ci.org/deosha/gogoair-demo.svg?branch=master)](https://travis-ci.org/deosha/gogoair-demo)
 
 * Solution Design: Services Used: Internet facing ALB, ECS, Autoscaling Groups. EC2 instances are in private subnet.
-Application is dockerized. S3 for storing Terraform state files. Logs are sent to Cloudwatch. Automation is done in Terraform v 0.11.7
+Application is dockerized. S3 for storing Terraform state files. Logs are sent to Cloudwatch. Automation is done in Terraform v 0.11.7.
+The desired task and instances is set to 1 but can be changed to any number in autoscaling groups and ecs service. The region in demo.tfvars is us-west-2.
 
 * Node version: 10.x
 

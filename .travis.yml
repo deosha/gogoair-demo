@@ -1,0 +1,23 @@
+language: node_js
+
+services:
+  - docker
+
+env:
+  global:
+    - NAME=gogoair
+    - CACHE_FOLDER=$HOME/docker-images
+    - CACHE_FILE=${CACHE_FOLDER}/${NAME}-${TRAVIS_COMMIT}.tgz
+
+jobs:
+  include:
+    - stage: bake and push docker image
+      script:
+      - docker build -t gogoair .
+      - docker tag gogoair:$TRAVIS_BUILD_NUMBER deojha1771/gogoair:$TRAVIS_BUILD_NUMBER
+      - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+      - docker push deojha1771/gogoair:$TRAVIS_BUILD_NUMBER
+
+    - stage: test
+      script:
+      - docker run -dit deojha1771/gogoair:$TRAVIS_BUILD_NUMBER

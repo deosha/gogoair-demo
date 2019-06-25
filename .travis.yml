@@ -13,11 +13,11 @@ jobs:
   include:
     - stage: bake and push docker image
       script:
-      - docker build -t ${NAME} .
-      - docker tag gogoair:$TRAVIS_BUILD_NUMBER deojha1771/${NAME}:$TRAVIS_BUILD_NUMBER
+      - docker build -t gogoair .
+      - docker tag gogoair:$TRAVIS_BUILD_NUMBER deojha1771/gogoair:$TRAVIS_BUILD_NUMBER
       - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-      - docker push deojha1771/${NAME}:$TRAVIS_BUILD_NUMBER
+      - docker push deojha1771/gogoair:$TRAVIS_BUILD_NUMBER
 
     - stage: test
       script:
-      - docker run -dit deojha1771/${NAME}:$TRAVIS_BUILD_NUMBER
+      - docker run -dit deojha1771/gogoair:$TRAVIS_BUILD_NUMBER

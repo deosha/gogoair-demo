@@ -1,8 +1,8 @@
 # README
 [![Build Status](https://travis-ci.org/deosha/gogoair-demo.svg?branch=master)](https://travis-ci.org/deosha/gogoair-demo)
 
-Solution Design:
-
+* Solution Design: Services Used: Internet facing ALB, ECS, Autoscaling Groups. EC2 instances are in private subnet.
+Application is dockerized. S3 for storing Terraform state files. Logs are sent to Cloudwatch. Automation is done in Terraform v 0.11.7
 
 * Node version: 10.x
 
@@ -25,8 +25,10 @@ export AWS_ACCESS_KEY_ID=""
 export AWS_SECRET_ACCESS_KEY=""
 cd infrastructure_automation
 terraform init -backend-config="bucket=state-files-gogoair" -backend-config="key=demo/infra.tfstate" -backend-config="region=us-west-2" -backend=true -force-copy -get=true -input=false
-terraform apply -input=false --var env=${env} --var tag=${tag} -var-file=demo.tfvars -auto-approve
-sleep 300
+terraform apply -input=false --var env=${env} --var tag=${tag} -var-file=demo.tfvars -auto-approve && sleep 300
+
+You can create your own bucket and change configurations accoridngly in main.tf and terraform init commands. Region is us-west-2 which you can change,
+
 
 Notice the --var env=${env} and --var tag=${tag} flags in terraform apply command. Any docker tag can be deployed on any environment hence making it really flexible to deploy and rollback on any environment.
 The docker tag can be decided during CI process in .travis.yml file. For now it is ${TRAVIS_BUILD_NUMBER}. To test, you can start with latest tag as it is already pushed.
@@ -47,6 +49,8 @@ route tables, route tables associates. The code automates everything related to 
 
 * Maintainance Required: Not much. Obviously patching of the servers needs to be done and updates are required but system is highly avalaible and scalable.
 
-
+To DO:
+1. Failed Deployment notification can be implemeented in Jenkins as post build step.
+2. Cloudwatch Monitoring and SNS notifications can be implemented. 
 
 

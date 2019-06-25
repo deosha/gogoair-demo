@@ -26,16 +26,16 @@ export AWS_ACCESS_KEY_ID=""
 export AWS_SECRET_ACCESS_KEY=""
 cd infrastructure_automation
 terraform init -backend-config="bucket=state-files-gogoair" -backend-config="key=demo/infra.tfstate" -backend-config="region=us-west-2" -backend=true -force-copy -get=true -input=false
-terraform apply -input=false --var env=${env} --var tag=${tag} -var-file=demo.tfvars -auto-approve && sleep 120
+terraform apply -input=false --var env=stage --var tag=latest -var-file=demo.tfvars -auto-approve && sleep 120
 
 sleep is added to make sure that target groups are healthy. If they are not healthy, wait for them to be healthy. Deregistration delay is 5 mins.
 
 You can create your own bucket and change configurations accoridngly in main.tf and terraform init commands. Region is us-west-2 which you can change,
 
 
-Notice the --var env=${env} and --var tag=${tag} flags in terraform apply command. Any docker tag can be deployed on any environment hence making it really flexible to deploy and rollback on any environment.
+Notice the --var env=stage and --var tag=latest flags in terraform apply command. Any docker tag can be deployed on any environment hence making it really flexible to deploy and rollback on any environment.
 The docker tag can be decided during CI process in .travis.yml file. For now it is ${TRAVIS_BUILD_NUMBER}. To test, you can start with latest tag as it is already pushed.
-Docker Tags are generally decided during branching and release strategy so CI code can be changed accordingly.
+Docker Tags are generally decided during branching and release strategy so CI code can be changed accordingly. you can change value of env to deploy any docker tag on any env.
 
 Then you can hit <ALB_DNS> on browser to open hello world nodejs app.
 
@@ -54,6 +54,6 @@ route tables, route tables associates. The code automates everything related to 
 
 To DO:
 1. Failed Deployment notification can be implemeented in Jenkins as post build step.
-2. Cloudwatch Monitoring and SNS notifications can be implemented.
+2. Cloudwatch Monitoring, SNS notifications to be implemented.
 
 
